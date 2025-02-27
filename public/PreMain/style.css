@@ -10,7 +10,8 @@ background-color:#23262D;
 }
 
 .navbar {
-background-color: #0E1012 !important;
+background-color:transparent  !important;
+background: rgba(0, 0, 0, 0.5)!important;
 display: flex;
 align-items: center;
 height: 30%;
