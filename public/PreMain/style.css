@@ -5,11 +5,20 @@
   font-family: 'Poppins', sans-serif;
   }
   
-  body{
-  background-image: url(./Img/Imagen\ de\ WhatsApp\ 2025-02-12\ a\ las\ 10.18.19_1c4f7258.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background-image: url('/PreMain/Img/Imagen de WhatsApp 2025-02-12 a las 10.18.19_1c4f7258.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   .navbar {

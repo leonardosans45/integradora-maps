@@ -1,151 +1,210 @@
-*{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: 'Poppins', sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-body{
-background-color:#23262D;
- }
+body {
+    background-color: #1a1d24;
+    min-height: 100vh;
+}
 
 .navbar {
-background-color: #0E1012 !important;
-display: flex;
-align-items: center;
-height: 30%;
+    background-color: rgba(14, 16, 18, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-                                      
+
 .navbar-brand {
-color: white;
-font-size: 5vh;
-margin-left: 3vh;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
-                                      
+
+.navbar-brand i {
+    font-size: 1.8rem;
+}
+
 .navbar-brand:hover {
-color: white;
-}
-                                      
-.collapse .Buttons {
-display: flex;
-justify-content: space-between;
-gap: 10px;
-}
-                                      
-.btn-outline-success {
- color: white;
-background-color: #0B2C6B;
-border: none;
-font-size: 3vh;
-display: flex;
-align-items: center;
-text-decoration: none;
-margin-right: 2vh;
-}
-                                      
-.btn-outline-success:hover {
-background-color: #0071ac;
-}
-                 
-                                      
-.btn-secondary {
-color: white;
-background-color: #0B2C6B;
-font-size: 3vh;
-border: none;
-}
-                                      
-.btn-secondary:hover {
-background-color: #0071ac;
-}
-.navbar-toggler {
-border: none;
-padding: 8px; 
-}
-                                      
-.navbar-toggler-icon {
-width: 6vh;
-height: 6vh;
-}
-                    
-.navbar-toggler:focus,
-.navbar-toggler:active {
-outline: none;
-box-shadow: none;
-border: none;
+    color: #fff;
 }
 
-.searchbar{
-margin-bottom: auto;
-margin-top: 10px;
-margin-right: 10px;
-height: 60px;
-background-color: #353b48;
-border-radius: 30px;
-padding: 10px;
-
+#userButton {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
 }
 
-                
-.search_input{
-color: white;
-border: 0;
-outline: 0;
-background: none;
-width: 0;
-caret-color:transparent;
-line-height: 40px;
-transition: width 0.4s linear;
-}
-.search_input::placeholder{
-color: white;
-}
-                
-.searchbar:hover > .search_input{
-padding: 0 10px;
-width: 250px;
-caret-color:#0071ac;
-transition: width 0.4s linear;
-}
-                
-.searchbar:hover > .search_icon{
-background: #0B2C6B;
-color: white;
-}
-                
-.search_icon{
-height: 40px;
-width: 40px;
-float: right;
-display: flex;
-justify-content: center;
-align-items: center;
-border-radius: 50%;
-color:white;
-text-decoration:none;
+#userButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.btn-outline-primary{
-align-items: center;
-color: #000;
-font-size: 12px;
-margin-top: 5vh;
-height: 15vh;
-width: 15vh;
-background-color: #fff;
-border: none;
-border-radius: 20vh;
-justify-content: flex-start;
- display: flex;
- flex-direction: column;
- column-gap: 3vh;
+#languageBtn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
 }
 
-.Buttons :hover{
-background-color: black;
+#languageBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
+.dropdown-menu {
+    background-color: #2a2d35;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 0.5rem;
+}
 
-.Buttons i{
-font-size: 5vh;
+.dropdown-item {
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Estilos para la barra de búsqueda flotante */
+.floating-search {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+}
+
+.searchbar {
+    background-color: rgba(42, 45, 53, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.searchbar:focus-within {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.search_input {
+    flex: 1;
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    font-size: 1rem;
+    padding-right: 1rem;
+}
+
+.search_input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.search_icon {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.search_icon:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para los botones circulares flotantes */
+.floating-buttons {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1000;
+}
+
+.circular-button {
+    position: relative;
+}
+
+.btn-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(42, 45, 53, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-circle i {
+    font-size: 1.5rem;
+    opacity: 0.9;
+}
+
+.btn-circle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Tooltip para los botones circulares */
+.circular-button::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(42, 45, 53, 0.95);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.circular-button:hover::after {
+    opacity: 1;
+    visibility: visible;
+    left: 80px;
+}
+
+/* Contenedor del mapa */
+.map-container {
+    position: fixed;
+    top: 56px; /* Altura del navbar */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 56px);
+    z-index: 0;
+}
+
+/* Asegurarse de que el mapa ocupe todo el contenedor */
+#map {
+    width: 100%;
+    height: 100%;
 }

@@ -4,21 +4,25 @@ const translations = {
         login: 'Login',
         english: 'English',
         spanish: 'Spanish',
-        username: 'Username',
+        username: 'Student ID',
         password: 'Password',
         rememberMe: 'Remember me',
         forgotPassword: 'Forgot Password?',
-        loginButton: 'Login'
+        loginButton: 'Login',
+        errorInvalidCredentials: 'Invalid student ID or password. Student ID must be 10 digits.',
+        errorServerError: 'Server error, please try again later'
     },
     ES: {
         login: 'Iniciar Sesión',
         english: 'Inglés',
         spanish: 'Español',
-        username: 'Usuario',
+        username: 'Matrícula',
         password: 'Contraseña',
         rememberMe: 'Recordarme',
         forgotPassword: '¿Olvidaste tu contraseña?',
-        loginButton: 'Iniciar Sesión'
+        loginButton: 'Iniciar Sesión',
+        errorInvalidCredentials: 'Matrícula o contraseña inválidos. La matrícula debe tener 10 dígitos.',
+        errorServerError: 'Error del servidor, por favor intente más tarde'
     }
 };
 
@@ -37,7 +41,90 @@ function translatePage(lang) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+// Función para manejar el inicio de sesión
+async function handleLogin(event) {
+    event.preventDefault();
+    
+    const matricula = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const rememberMe = document.getElementById('rememberMe').checked;
+    const errorMessage = document.getElementById('errorMessage');
+    const currentLang = document.getElementById('languageText').textContent;
+
+    console.log('Intentando login con:', { matricula, rememberMe });
+
+    try {
+        console.log('Enviando petición al servidor...');
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                matricula,
+                password
+            })
+        });
+
+        const data = await response.json();
+        console.log('Respuesta del servidor:', data);
+
+        if (data.success) {
+            // Guardar información del usuario si rememberMe está activado
+            if (rememberMe) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+            } else {
+                sessionStorage.setItem('user', JSON.stringify(data.user));
+            }
+            // Si la autenticación es exitosa, redirigir a la página principal
+            window.location.href = '../Main/index.html';
+        } else {
+            // Mostrar mensaje de error
+            errorMessage.textContent = translations[currentLang].errorInvalidCredentials;
+            errorMessage.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error detallado:', { 
+            message: error.message,
+            stack: error.stack,
+            error
+        });
+        errorMessage.textContent = translations[currentLang].errorServerError;
+        errorMessage.style.display = 'block';
+    }
+
+    return false;
+}
+
+// Función para validar que solo se ingresen números en la matrícula
+function validateMatricula(event) {
+    // Permitir solo números y teclas de control
+    if (!/[0-9]/.test(event.key) && event.key.length === 1) {
+        event.preventDefault();
+    }
+}
+
+// Función para probar la conexión a la base de datos
+async function testDatabaseConnection() {
+    try {
+        console.log('Probando conexión a la base de datos...');
+        const response = await fetch('/users');
+        const data = await response.json();
+        console.log('Conexión exitosa, usuarios encontrados:', data);
+        return true;
+    } catch (error) {
+        console.error('Error al probar la conexión:', error);
+        return false;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async function () {
+    // Probar la conexión a la base de datos al cargar
+    await testDatabaseConnection();
+    // Agregar validación al campo de matrícula
+    const matriculaInput = document.getElementById('username');
+    matriculaInput.addEventListener('keypress', validateMatricula);
+
     // Funcionalidad para cambiar el idioma
     const languageOptions = document.querySelectorAll(".dropdown-item");
     const languageText = document.getElementById("languageText");
@@ -51,7 +138,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedLang = this.getAttribute("data-lang");
             languageText.textContent = selectedLang;
             translatePage(selectedLang);
-            console.log("Idioma cambiado a:", selectedLang);
+            
+            // Actualizar mensaje de error si está visible
+            const errorMessage = document.getElementById('errorMessage');
+            if (errorMessage.style.display === 'block') {
+                errorMessage.textContent = translations[selectedLang].errorInvalidCredentials;
+            }
         });
     });
 });
