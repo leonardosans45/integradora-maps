@@ -4,16 +4,54 @@ padding: 0;
 box-sizing: border-box;
 font-family: 'Poppins', sans-serif;
 }
-body{
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh;                    
-background-image: url('https://i.imgur.com/WbXqoDQ.jpeg');
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;                    
+    background-image: url('https://i.imgur.com/WbXqoDQ.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
 
+.language-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.language-selector .btn-secondary {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.2);
+    backdrop-filter: blur(10px);
+    color: #fff;
+}
+
+.language-selector .btn-secondary:hover,
+.language-selector .btn-secondary:focus {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,.3);
+    color: #fff;
+}
+
+.language-selector .dropdown-menu {
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,.2);
+}
+
+.language-selector .dropdown-item {
+    color: #fff;
+}
+
+.language-selector .dropdown-item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.wrapper {
+    margin: auto;
 }
 
 .wrapper{

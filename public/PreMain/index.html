@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-                    <title>PreMain</title>
-                    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>PreMain</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="#">Logo</a>
@@ -18,42 +20,58 @@
         <span class="navbar-toggler-icon"></span>
       </button>
   
-
-      <div class="collapse navbar-collapse justify-content-end">
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <div class="d-flex">
           <a class="link" href="../Login/index.html">
             <button class="btn btn-outline-success me-2" type="button">
-              <i class="bi bi-person-fill"></i> Login
+              <i class="bi bi-person-fill"></i> <span data-translate="login">Login</span>
             </button>
           </a>
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <i class="bi bi-globe"></i> EN
-          </button>
+          <div class="dropdown">
+            <button id="languageBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-globe"></i> <span id="languageText">EN</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" data-lang="EN" data-translate="english">English</a></li>
+              <li><a class="dropdown-item" href="#" data-lang="ES" data-translate="spanish">Español</a></li>
+            </ul>
+         </div>
         </div>
       </div>
     </div>
   </nav>
-  
 
-<div class="Banner">
-  <div class="BannerContent" >
-      <h1 class="BannerTitle">Welcome to our website</h1>
-      <p class="BannerParagraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-  </div>
-  <div class="img">
+  <div class="Banner">
+    <div class="BannerContent">
+      <h1 class="BannerTitle" data-translate="welcome">Welcome to UTCH MAP</h1>
+      <p class="BannerParagraph" data-translate="description">This page is dedicated to new members of the Universidad Tecnológica de Chihuahua BIS Model where you can find a complete map of the building...</p>
+    </div>
+    <div class="img">
       <img src="https://i.imgur.com/cIMEtPW.png" alt="Imagen">
+    </div>
   </div>
+
+  <button id="showMoreBtn" type="button" class="btn btn-primary">
+    <span data-translate="seeMore">See more</span> <i class="bi bi-caret-up-fill"></i>
+</button>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 data-translate="aboutUs">About Us</h2>
+        <p data-translate="aboutDescription">We are an organization dedicated to providing information and resources for new members of the Universidad Tecnológica de Chihuahua BIS Model.</p>
+        <p data-translate="mission">Our mission is to facilitate the orientation and adaptation of new students within the university campus through an interactive and friendly mapping system.</p>
+        <p data-translate="mainFeatures">Main Features:</p>
+        <ul>
+            <li data-translate="feature1">Detailed mapping of facilities</li>
+            <li data-translate="feature2">Updated location information</li>
+            <li data-translate="feature3">Intuitive and easy-to-use interface</li>
+            <li data-translate="feature4">Multilingual support</li>
+        </ul>
+    </div>
 </div>
 
-<button type="button" class="btn btn-primary">
-  see more <i class="bi bi-caret-down-fill"></i>
-</button>
- 
-<footer class="bg-body-tertiary text-center text-lg-start">
-  <div class="text-center p-3" >
-    Nose que poner xd
-  </div>
-</footer>
+<script src="script.js"></script>
+
 </body>
 </html>
