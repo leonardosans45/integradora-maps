@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -13,72 +14,130 @@
     <title>Campus Map</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <i class="bi bi-geo-alt-fill text-primary"></i> Campus Map
+                <i class="bi bi-geo-alt-fill"></i> <span data-translate="campusMap">Campus Map</span>
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <div class="d-flex">
-                    <button class="btn btn-outline-success me-2" type="button" id="userButton">
-                        <i class="bi bi-person-fill"></i> <span id="matriculaDisplay">Loading...</span>
+            <div class="d-flex">
+                <button class="btn btn-outline-success me-2" type="button" id="userButton">
+                    <i class="bi bi-person-fill"></i> <span id="matriculaDisplay">Loading...</span>
+                </button>
+                <div class="dropdown">
+                    <button id="languageBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-globe"></i> <span id="languageText">EN</span>
                     </button>
-                    <div class="dropdown">
-                        <button id="languageBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-globe"></i> <span id="languageText">EN</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" data-lang="EN" data-translate="english">English</a></li>
-                            <li><a class="dropdown-item" href="#" data-lang="ES" data-translate="spanish">Español</a></li>
-                        </ul>
-                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" data-lang="EN" data-translate="english">English</a></li>
+                        <li><a class="dropdown-item" href="#" data-lang="ES" data-translate="spanish">Español</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="container-fluid mt-5 pt-4">
-        <!-- Barra de búsqueda flotante -->
-        <div class="floating-search">
-            <div class="searchbar">
-                <input class="search_input" type="text" placeholder="Search locations..." id="searchInput">
-                <button class="search_icon" id="searchButton">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
+    <!-- Search button and expandable search bar -->
+    <div class="search-container">
+        <div class="search-input-container">
+            <input type="text" class="search-input" placeholder="Search locations..." data-translate="search">
         </div>
+        <button type="button" class="btn btn-circle search-btn">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
 
-        <!-- Botones circulares flotantes -->
+    <div class="container">
+        <!-- Botones circulares flotantes y paneles de información -->
         <div class="floating-buttons">
             <div class="circular-button" data-tooltip="Buildings">
-                <button type="button" class="btn btn-circle">
+                <button type="button" class="btn btn-circle" data-panel="buildings-panel">
                     <i class="bi bi-buildings"></i>
                 </button>
             </div>
             <div class="circular-button" data-tooltip="Classrooms">
-                <button type="button" class="btn btn-circle">
+                <button type="button" class="btn btn-circle" data-panel="classrooms-panel">
                     <i class="bi bi-backpack2"></i>
                 </button>
             </div>
             <div class="circular-button" data-tooltip="Special Classrooms">
-                <button type="button" class="btn btn-circle">
+                <button type="button" class="btn btn-circle" data-panel="special-panel">
                     <i class="bi bi-pc-display-horizontal"></i>
                 </button>
             </div>
         </div>
 
+        <!-- Paneles de información -->
+        <div class="info-panels">
+            <div id="buildings-panel" class="info-panel">
+                <div class="panel-header">
+                    <h3><i class="bi bi-buildings"></i> <span data-translate="buildings">Buildings</span></h3>
+                    <button class="close-panel"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="panel-content">
+                    <div class="info-item">
+                        <h4 data-translate="buildingA">Building A</h4>
+                        <p data-translate="buildingADesc">Administrative offices and main entrance</p>
+                    </div>
+                    <div class="info-item">
+                        <h4 data-translate="buildingB">Building B</h4>
+                        <p data-translate="buildingBDesc">Engineering and Technology departments</p>
+                    </div>
+                    <div class="info-item">
+                        <h4 data-translate="buildingC">Building C</h4>
+                        <p data-translate="buildingCDesc">Science laboratories and research facilities</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="classrooms-panel" class="info-panel">
+                <div class="panel-header">
+                    <h3><i class="bi bi-backpack2"></i> <span data-translate="classrooms">Classrooms</span></h3>
+                    <button class="close-panel"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="panel-content">
+                    <div class="info-item">
+                        <h4 data-translate="firstFloor">First Floor</h4>
+                        <p data-translate="firstFloorDesc">Rooms 101-110: General purpose classrooms</p>
+                    </div>
+                    <div class="info-item">
+                        <h4 data-translate="secondFloor">Second Floor</h4>
+                        <p data-translate="secondFloorDesc">Rooms 201-210: Mathematics and Physics</p>
+                    </div>
+                    <div class="info-item">
+                        <h4 data-translate="thirdFloor">Third Floor</h4>
+                        <p data-translate="thirdFloorDesc">Rooms 301-310: Language and Literature</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="special-panel" class="info-panel">
+                <div class="panel-header">
+                    <h3><i class="bi bi-pc-display-horizontal"></i> <span data-translate="specialClassrooms">Special Classrooms</span></h3>
+                    <button class="close-panel"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="panel-content">
+                    <div class="info-item">
+                        <h4 data-translate="computerLabs">Computer Labs</h4>
+                        <p data-translate="computerLabsDesc">Labs 1-3: Programming and Software Development</p>
+                    </div>
+                    <div class="info-item">
+                        <h4 data-translate="scienceLabs">Science Labs</h4>
+                        <p data-translate="scienceLabsDesc">Labs 4-6: Chemistry and Biology facilities</p>
+                    </div>
+                    <div class="info-item">
+                        <h4 data-translate="multimediaRooms">Multimedia Rooms</h4>
+                        <p data-translate="multimediaRoomsDesc">Rooms 7-8: Audio-visual and presentation facilities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Contenedor para el mapa -->
         <div id="map" class="map-container"></div>
-    </main>
+    </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>

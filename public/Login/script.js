@@ -51,7 +51,11 @@ async function handleLogin(event) {
     const errorMessage = document.getElementById('errorMessage');
     const currentLang = document.getElementById('languageText').textContent;
 
-    console.log('Intentando login con:', { matricula, rememberMe });
+    if (!matricula || !password) {
+        errorMessage.textContent = translations[currentLang].errorInvalidCredentials;
+        errorMessage.style.display = 'block';
+        return;
+    }
 
     try {
         console.log('Enviando petición al servidor...');
@@ -67,33 +71,33 @@ async function handleLogin(event) {
         });
 
         const data = await response.json();
-        console.log('Respuesta del servidor:', data);
 
         if (data.success) {
-            // Guardar información del usuario si rememberMe está activado
+            const userData = {
+                matricula: matricula,
+                isAuthenticated: true,
+                timestamp: new Date().getTime(),
+                sessionId: Math.random().toString(36).substring(2) + Date.now().toString(36)
+            };
+
+            // Almacenar tanto en sessionStorage como en localStorage si rememberMe está marcado
+            sessionStorage.setItem('userData', JSON.stringify(userData));
             if (rememberMe) {
-                localStorage.setItem('user', JSON.stringify(data.user));
-            } else {
-                sessionStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('userData', JSON.stringify(userData));
             }
-            // Si la autenticación es exitosa, redirigir a la página principal
-            window.location.href = '../Main/index.html';
+
+            // Evitar la navegación hacia atrás
+            history.pushState(null, null, window.location.href);
+            window.location.replace('../Main/index.html');
         } else {
-            // Mostrar mensaje de error
             errorMessage.textContent = translations[currentLang].errorInvalidCredentials;
             errorMessage.style.display = 'block';
         }
     } catch (error) {
-        console.error('Error detallado:', { 
-            message: error.message,
-            stack: error.stack,
-            error
-        });
+        console.error('Error detallado:', error);
         errorMessage.textContent = translations[currentLang].errorServerError;
         errorMessage.style.display = 'block';
     }
-
-    return false;
 }
 
 // Función para validar que solo se ingresen números en la matrícula
@@ -118,12 +122,24 @@ async function testDatabaseConnection() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener('DOMContentLoaded', async function() {
     // Probar la conexión a la base de datos al cargar
     await testDatabaseConnection();
     // Agregar validación al campo de matrícula
     const matriculaInput = document.getElementById('username');
     matriculaInput.addEventListener('keypress', validateMatricula);
+
+    // Si el usuario ya está autenticado, redirigir al Main
+    const userData = JSON.parse(sessionStorage.getItem('userData') || localStorage.getItem('userData') || 'null');
+    if (userData && userData.isAuthenticated) {
+        window.location.replace('../Main/index.html');
+    }
+
+    // Prevenir navegación hacia atrás
+    history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function(event) {
+        history.pushState(null, null, window.location.href);
+    });
 
     // Funcionalidad para cambiar el idioma
     const languageOptions = document.querySelectorAll(".dropdown-item");
